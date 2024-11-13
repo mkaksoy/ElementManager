@@ -1,6 +1,6 @@
 # <p align="center">Element Manager</p>
 <p align="center">
-<img src="https://cdn.modrinth.com/data/z2AiNsm2/images/cf16b1677aa8cf9a190cc316cd11064fdf9f1dfd.png" width="250" height="250">
+<img src="https://cdn.modrinth.com/data/z2AiNsm2/images/cf16b1677aa8cf9a190cc316cd11064fdf9f1dfd.png" width="250" height="250" alt="">
 </p>
 
 <p align="center">A lightweight plugin that simplifies server management in Minecraft 🛠️</p>
@@ -13,7 +13,7 @@
 # What is Element Manager?
 **Element Manager** is a powerful and lightweight server management plugin for **Minecraft**. It provides essential features for server administrators, such as automatic restart functionality, configuration management, and more.
 
-This plugin allows for easy management of server settings and ensures your server stays running smoothly with auto-restart capabilities. The plugin is designed to work with both **Bukkit** and **Spigot** servers.
+This plugin allows for easy management of server settings and ensures your server stays running smoothly with auto-restart capabilities. The plugin is designed to work with both **Bukkit** and **Paper** servers.
 
 ## Features
 
@@ -36,8 +36,7 @@ The plugin creates a `config.yml` file in the `management` folder on first run. 
 
 ```yaml
 options:                # Server Options
-  auto-restart: true    # If enabled, it will automatically restart the server after it is
-  stopped
+  auto-restart: true    # If enabled, it will automatically restart the server after it is stopped
 logging:                # Logging Options
   chat:                 # Chat Logging Options
     enabled: true       # If true, the plugin will automatically log chat messages sent by the player

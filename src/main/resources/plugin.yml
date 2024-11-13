@@ -1,5 +1,5 @@
 name: ElementManager
-version: 0.0.1
+version: 1.1.0
 main: io.github.mkaksoy.elementmanager.Main
 description: A lightweight plugin that simplifies server management in Minecraft
 author: Mehmet Kaan AKSOY

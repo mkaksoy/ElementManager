@@ -7,6 +7,6 @@ import static org.bukkit.Bukkit.getServer;
 public class Paths {
     public static File management = new File(getServer().getWorldContainer(), "management");
     public static File configFile = new File(management, "config.yml");
-    public static File backups = new File(management, "backups");
+    // Coming soon: public static File backups = new File(management, "backups");
     public static File logs = new File(management, "logs");
 }

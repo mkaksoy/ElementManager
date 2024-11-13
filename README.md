@@ -40,11 +40,11 @@ options:                # Server Options
 logging:                # Logging Options
   chat:                 # Chat Logging Options
     enabled: true       # If true, the plugin will automatically log chat messages sent by the player
-    forbidden:          # Add banned words to your servers (e.g. swearing, bad words). You canf find out which players wrote these messages by examining the logs.
+    forbidden:          # Add banned words to your servers (e.g. swearing, bad words). You can find out which players wrote these messages by examining the logs.
       - word1
       - word2
       - word3
-server:                 # Server Propeties
+server:                 # Server Properties
   jar: "server.jar"     # Name of the server JAR file
   memory: 4096          # The memory that your server uses (e.g. 4096MB = 4GB)
   gui: false            # If enabled, server starts with a GUI

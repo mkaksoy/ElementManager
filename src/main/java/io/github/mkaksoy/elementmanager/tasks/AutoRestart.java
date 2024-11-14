@@ -8,9 +8,9 @@ public class AutoRestart {
 
     public static void restart() {
         try {
-            String command = "java -Xmx" + Config.get("server.memory") +
-                    "M -jar " + Config.get("server.jar") +
-                    (Boolean.TRUE.equals(Config.get("server.jar")) ? "" : " nogui");
+            String command = "java -Xmx" + Config.config.getInt("server.memory") +
+                    "M -jar " + Config.config.getString("server.jar") +
+                    ((Config.config.getBoolean("server.gui")) ? "" : " nogui");
 
             String terminalCommand = getTerminalCommand(command);
             ProcessBuilder processBuilder = new ProcessBuilder(terminalCommand.split(" "));

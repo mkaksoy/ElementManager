@@ -18,7 +18,7 @@ public class FileLogger {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDateTime now = LocalDateTime.now();
 
-            File logsDir = Paths.logs;
+            File logsDir = PathUtils.logs;
             if (!logsDir.exists()) {
                 boolean created = logsDir.mkdir();
                 if (!created) {

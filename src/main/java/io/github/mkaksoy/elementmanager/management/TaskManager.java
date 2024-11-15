@@ -2,10 +2,12 @@ package io.github.mkaksoy.elementmanager.management;
 
 import io.github.mkaksoy.elementmanager.Main;
 import io.github.mkaksoy.elementmanager.utils.Config;
-import io.github.mkaksoy.elementmanager.utils.PathUtils;
-import io.github.mkaksoy.elementmanager.utils.levels.Levels;
+import io.github.mkaksoy.elementmanager.utils.levels.Error;
+import io.github.mkaksoy.elementmanager.utils.levels.Info;
+import io.github.mkaksoy.elementmanager.utils.levels.Warning;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -14,34 +16,38 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class TaskManager {
 
     private final Plugin plugin;
     private final BukkitScheduler scheduler;
+    private static final Logger logger = Main.logger;
+    private final ConfigurationSection tasks = Config.config.getConfigurationSection("tasks");
 
     public TaskManager(Plugin plugin, BukkitScheduler scheduler) {
         this.plugin = plugin;
         this.scheduler = scheduler;
+    }
+
+    public void start() {
         initializeTasks();
     }
 
     private void initializeTasks() {
-        var tasksSection = Config.config.getConfigurationSection("tasks");
-
-        if (tasksSection != null) {
-            for (String taskName : tasksSection.getKeys(false)) {
-                boolean enabled = tasksSection.getBoolean(taskName + ".enabled", false);
-                String fileName = tasksSection.getString(taskName + ".file", null);
-                long interval = tasksSection.getLong(taskName + ".interval", 600L) * 20; // Default to 600 seconds
+        if (tasks != null) {
+            for (String taskName : tasks.getKeys(false)) {
+                boolean enabled = tasks.getBoolean(taskName + ".enabled", false);
+                String fileName = tasks.getString(taskName + ".file", null);
+                long interval = tasks.getLong(taskName + ".interval", 0L) * 20;
 
                 if (enabled && fileName != null) {
                     scheduler.runTaskTimer(plugin, new TaskRunner(taskName, fileName), 0, interval);
-                    Main.logger.log(Levels.TASK, "Scheduled task: " + taskName + " with interval: " + interval/20 + " seconds");
+                    logger.log(Info.INFO, "Scheduled task: " + taskName + " with interval: " + interval/20 + " seconds");
                 }
             }
         } else {
-            Main.logger.warning("No tasks found in the configuration.");
+            logger.log(Warning.WARNING, "No tasks found in the configuration.");
         }
     }
 
@@ -49,9 +55,9 @@ public class TaskManager {
 
         @Override
             public void run() {
-                Main.logger.log(Levels.TASK, "Running task: " + taskName);
+                logger.log(Info.INFO, "Running task: " + taskName);
                 ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-                File taskFile = new File(PathUtils.tasks, fileName);
+                File taskFile = new File(Manager.tasks, fileName);
 
                 for (String line : parseCommand(taskFile)) {
                     Bukkit.dispatchCommand(console, line);
@@ -66,7 +72,7 @@ public class TaskManager {
                         lines.add(line);
                     }
                 } catch (IOException e) {
-                    Main.logger.log(Levels.ERROR, "Error while running tasks: " + e.getMessage(), e);
+                    logger.log(Error.ERROR, "Error while running tasks: " + e.getMessage(), e);
                 }
                 return lines.toArray(new String[0]);
             }

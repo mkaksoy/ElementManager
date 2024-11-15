@@ -1,8 +1,12 @@
 package io.github.mkaksoy.elementmanager.tasks;
 
 import io.github.mkaksoy.elementmanager.utils.Config;
+import io.github.mkaksoy.elementmanager.utils.levels.Error;
+import io.github.mkaksoy.elementmanager.utils.levels.Fatal;
 
 import java.io.IOException;
+
+import static io.github.mkaksoy.elementmanager.Main.logger;
 
 public class AutoRestart {
 
@@ -25,7 +29,7 @@ public class AutoRestart {
                 System.out.println("Server start failed with exit code: " + exitCode);
             }
         } catch (IOException | InterruptedException e) {
-            e.fillInStackTrace();
+            logger.log(Fatal.FATAL, "Error restarting server.", e);
         }
     }
 

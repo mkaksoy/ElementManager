@@ -2,7 +2,7 @@ package io.github.mkaksoy.elementmanager.tasks;
 
 import io.github.mkaksoy.elementmanager.utils.Config;
 import io.github.mkaksoy.elementmanager.utils.FileLogger;
-import io.github.mkaksoy.elementmanager.utils.levels.Levels;
+import io.github.mkaksoy.elementmanager.utils.levels.logs.ChatMessage;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -36,10 +36,9 @@ public class AutoLogger implements Listener {
                 }
             }
 
-            FileLogger.log(Levels.CHAT_MESSAGE, logMessage.toString());
+            FileLogger.log(ChatMessage.CHAT_MESSAGE, logMessage.toString());
         } else {
             System.err.println("Forbidden keywords are in unexpected format!");
         }
     }
 }
-

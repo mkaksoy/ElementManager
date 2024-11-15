@@ -1,6 +1,7 @@
 package io.github.mkaksoy.elementmanager.utils;
 
-import io.github.mkaksoy.elementmanager.Main;
+import io.github.mkaksoy.elementmanager.management.Manager;
+import io.github.mkaksoy.elementmanager.utils.levels.Error;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,25 +9,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import static io.github.mkaksoy.elementmanager.Main.logger;
 
 public class FileLogger {
-    private static final Logger logger = Logger.getLogger(FileLogger.class.getName());
-
     static {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDateTime now = LocalDateTime.now();
 
-            File logsDir = PathUtils.logs;
-            if (!logsDir.exists()) {
-                boolean created = logsDir.mkdir();
-                if (!created) {
-                    Main.logger.warning("Error creating 'management' folder.");
-                } else {
-                    Main.logger.info("'management' folder created successfully.");
-                }
-            }
+            File logsDir = Manager.logs;
 
             String logFileName = formatter.format(now) + "_0.log";
             File logFile = new File(logsDir, logFileName);
@@ -44,7 +36,7 @@ public class FileLogger {
             logger.addHandler(fileHandler);
             logger.setUseParentHandlers(false);
         } catch (IOException e) {
-            e.fillInStackTrace();
+            logger.log(Error.ERROR, "Error creating logs.", e);
         }
     }
 
